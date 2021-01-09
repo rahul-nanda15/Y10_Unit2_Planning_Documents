@@ -1,0 +1,210 @@
+
+
+
+<html>
+    <head>
+        <!-- FIREBASE and GOOGLE AUTHENICATION IMPORTS -->
+        
+        <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-database.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+ 
+    </head>
+
+    <body>
+            <h1 id="uid"></h1> <!--empty label for username/id-->
+            
+            
+            <h3>A demonstration of the Login/Logout Functionality and the Workflow of creating a user's profile</h3>
+
+            <!--sign in/out buttons-->
+            <button onclick = "signin()">Sign In</button>
+            <button onclick="signout()">Sign Out</button>
+           
+             
+            <!--edit profile btn-->
+            <button id="myBtn">Edit Your Profile</button>
+            <br><br>
+            <!--empty label for user description-->
+            <h3 id="description"></h3>
+
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+
+              <!-- Modal content -->
+              <div class="modal-content">
+                <span class="close">&times;</span>
+                <p id="name"></p>
+                <!--ward dropdown; here are a few sample wards within the GTA-->
+                 <label for="wards">Select Ward:  </label><select name="wards" id="wards">
+                    <option value="Eglinton-Lawrence">Eglinton-Lawrence</option>
+                    <option value="DonValleyEast">Don Valley East</option>
+                    <option value="DonValleyWest">Don Valley West</option>
+                    <option value="YorkCentre">York Centre</option>
+                </select><br><br>
+                <!--button to submit user info-->
+                <button onclick="wardDisplay()">Submit</button>
+              </div>
+
+            </div>  
+    </body>
+    
+    <!-- HERE IS THE JAVASCRIPT TO CONNECT TO YOUR FIREBASE -->
+    <script>
+
+        function signout(){
+            firebase.auth().signOut().then(function() {
+              // Sign-out successful.
+            }, function(error) {
+              // An error happened.
+            });
+            document.getElementById("description").innerHTML = '' //reset document text when you sign out
+        }
+
+        function wardDisplay(){
+            var e = document.getElementById("wards"); //referencing dropdown menu value
+            var selectedWard = e.options[e.selectedIndex].text; 
+
+
+            var usr = document.getElementById("name").innerHTML
+
+            //creating string for description featuring the user's name and their selected ward
+            document.getElementById("description").innerHTML = "Hello " + usr + ", here is the Neighborhood Map for Your Ward: " + selectedWard+"!"
+
+            //close the modal once button has been clicked
+            modal.style.display = "none";
+
+        }
+
+        // Variables created here to be used throughout the program
+
+        var provider = new firebase.auth.GoogleAuthProvider();
+        var userId = document.getElementById("uid").innerHTML;
+        
+        // Your web app's Firebase configuration that we copy-and-paste from 
+        // the Firebase setup
+        var config = 
+        {
+            apiKey: "AIzaSyCbV6WbfBlix4kGGWNeNTg83Gp8rolr0tw",
+            authDomain: "fir-demo-6717e.firebaseapp.com",
+            databaseURL: "https://fir-demo-6717e.firebaseio.com",
+            projectId: "fir-demo-6717e",
+            storageBucket: "fir-demo-6717e.appspot.com",
+            messagingSenderId: "215459778130",
+            appId: "1:215459778130:web:5bd3954890f15aeb18198b",
+            measurementId: "G-46HVCCBHP1"        
+        };
+
+        firebase.initializeApp(config);
+        
+
+        // Authentication Check: to see if you are logged in
+        firebase.auth().onAuthStateChanged(function(user) 
+        {
+            if (user == null) 
+            {
+                document.getElementById("uid").innerHTML = "not logged in";
+                return;
+            } 
+            else 
+            {
+                modal.style.display = "block"; //if not logged in, display modal
+                userId = user.displayName; // getting user's name
+                document.getElementById("uid").innerHTML = userId; // display Google uid on page
+                document.getElementById("name").innerHTML = user.displayName
+
+
+                
+            } 
+        }); 
+
+
+        
+
+        function signin() 
+        {
+            //firebase auth to sign in using google
+            var provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithRedirect(provider).then(function(result) { 
+                window.location.replace("fbtest.html");
+            });
+        } 
+
+        //modal taken from w3 schools
+        
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    </script>
+
+    <style type="text/css">
+        
+        body {font-family: Arial, Helvetica, sans-serif;}
+
+        /* The Modal (background) */
+        .modal {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 1; /* Sit on top */
+          padding-top: 100px; /* Location of the box */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgb(0,0,0); /* Fallback color */
+          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+          background-color: #fefefe;
+          margin: auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 20%;
+        }
+
+        /* The Close Button */
+        .close {
+          color: #aaaaaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+
+
+    </style>
+</html>
+

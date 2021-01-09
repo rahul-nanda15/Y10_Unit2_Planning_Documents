@@ -1,0 +1,271 @@
+<html>
+
+	<head>
+		
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+		<script src="https://kit.fontawesome.com/4b51920527.js"></script>
+
+
+
+	</head>
+
+	<body>
+
+		<nav class="navbar navbar-expand-sm bg-light">
+			<!-- Nav bar titles -->
+			<a class="navbar-brand" href="#">Neighborhood Issue Tracker</a>
+			<a class="navbar-brand" href="#">Logo</a>
+
+  <!-- Nav bar Links -->
+		  <ul class="navbar-nav" style="padding-left:650px;">
+		    <li class="nav-item active">
+		      <a class="nav-link" href="#">Home</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="#">Map/Feed</a>
+		    </li>
+		     <li class="nav-item">
+		      <a class="nav-link" href="#">Analytics</a>
+		    </li>
+		    <li class="nav-item" style="padding-right: 15px;">
+		      <a class="nav-link" href="#">Profile</a>
+		    </li>
+		    <!-- Button to add post to activity feed and leaflet map -->
+		    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Add Post + </button>
+		  </ul>
+
+		</nav>
+
+		<!-- body container -->
+
+		<div class="container">
+
+			<!-- page title  -->
+
+			<h2 style="text-align: center;padding-top: 30px;"> Grid Layout Structure </h2>
+
+			<!-- creating bootstrap row -->
+
+		  <div class="row" style="padding-top: 30px;">
+
+		  	<!-- grid column 1 -->
+
+		    <div class="col-sm">
+		      
+
+		    <!-- column title -->
+			<h4> Filter Map and Activity Feed </h4><br>
+
+			<!-- drop down titles created with bootstrap classes-->
+
+			<div class="dropdown show">
+			  <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    Date
+			  </a>
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+			  	<!-- dropdown options -->
+			    <a class="dropdown-item" href="#">Latest</a>
+			    <a class="dropdown-item" href="#">Oldest</a>
+			  </div>
+			</div>
+			<br>
+			<div class="dropdown show">
+			  <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    Popularity
+			  </a>
+			  <!-- dropdown options -->
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+			    <a class="dropdown-item" href="#">Most Likes</a>
+			    <a class="dropdown-item" href="#">Least Likes</a>
+			  </div>
+			</div>
+			<br>
+			<div class="dropdown show">
+			  <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    Danger
+			  </a>
+			  <!-- dropdown options -->
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+			    <a class="dropdown-item" href="#">Most Dangerous</a>
+			    <a class="dropdown-item" href="#">Least Dangerous</a>
+			  </div>
+			</div>
+			<br>
+			<!-- button that would compile inputs of user to filter activity feed and map -->
+			<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Submit Filters</button>
+			<br><br>
+
+			<!-- sample icons that could be used as issue category icon logos or elsewhere throughout the platform -->
+			<h4> Font Awesome Icon Library</h4><br>
+			<i class="fas fa-dog"></i>
+			<i class="far fa-hand-point-up"></i>
+			<i class="far fa-hand-point-down"></i>
+			<i class="fas fa-ambulance"></i>
+			<i class="fas fa-car-crash"></i>
+			<i class="fas fa-charging-station"></i>
+			<i class="far fa-hospital"></i>
+			<i class="fas fa-lock"></i>
+			<i class="fas fa-shield-alt"></i>
+
+
+			
+
+		    </div>
+
+		    <!-- grid column 2 -->
+		    <div class="col-sm">
+
+		    	<!-- layout of how a user would add a post to the activity feed and map -->
+
+		    	<h4> Add An Issue/Post </h4><br>
+
+				<div class="dropdown show">
+				  <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				  	<!-- dropdown title -->
+				    Issue Category
+				  </a>
+				  <!-- dropdown options -->
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				    <a class="dropdown-item" href="#">Burglary</a>
+				    <a class="dropdown-item" href="#">Theft</a>
+				    <a class="dropdown-item" href="#">Package Pirate</a>
+				    <a class="dropdown-item" href="#">etc...</a>
+
+				  </div>
+				  <br><br>
+				  <!-- input box for entering description of issue -->
+				   <label for="exampleFormControlTextarea1">Description (text area 50 words)</label>
+    			   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+				</div>
+				<br>
+				<!-- form for date of issue -->
+				<form action="/action_page.php">
+				  <label for="date">Date of Experience:</label>
+				  <input type="date"  name="date">
+				
+				</form>
+				<form action="/action_page.php">
+					<!-- form for time of issue -->
+				  <label for="appt">Time of Experience</label>
+				  <input type="time" id="appt" name="appt">
+				
+				</form>
+
+				<div class="dropdown show">
+				  <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				  	<!-- dropdown menu to allow users to select ward of experienced issue -->
+				    Toronto Ward
+				  </a>
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				  	<!-- dropdown options - this would be increased to include all toronto wards, but these are a few examples -->
+				    <a class="dropdown-item" href="#">Eglinton-Lawrence</a>
+				    <a class="dropdown-item" href="#">Don Valley West</a>
+				    <a class="dropdown-item" href="#">Toronto-Danforth</a>
+				  </div>
+				</div>
+
+				<br>
+				<div>
+			    <input type="text" class="form-control" placeholder="Enter address...">
+			    </div>
+
+			    <br>
+			    <!-- button that compiles information and would submit post to activity feed and map -->
+			    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Submit Post</button>
+
+			    
+
+			    
+
+		    </div>
+		    <!-- grid column 3-->
+		    <div class="col-sm">
+		    	<!-- layout for user creating a profile and adding their personal information to the account-->
+		      <h4> Create/Edit Your Profile </h4><br>
+		      <div>
+			    <input type="text" class="form-control" placeholder="Enter your full name...">
+			   </div><br>
+			   <div class="dropdown show">
+				  <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				  	<!-- dropdown for user to enter their ward-->
+				    Toronto Ward
+				  </a>
+
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				    <a class="dropdown-item" href="#">Eglinton-Lawrence</a>
+				    <a class="dropdown-item" href="#">Don Valley West</a>
+				    <a class="dropdown-item" href="#">Toronto-Danforth</a>
+				  </div>
+				</div><br>
+				<div class="dropdown show">
+				  <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Your Age
+				  </a>
+				  <!-- age dropdown-->
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				    <a class="dropdown-item" href="#">10-18</a>
+				    <a class="dropdown-item" href="#">19-25</a>
+				    <a class="dropdown-item" href="#">26-35</a>
+				    <a class="dropdown-item" href="#">36-45</a>
+				    <a class="dropdown-item" href="#">46-60</a>
+				    <a class="dropdown-item" href="#">61-80</a>
+				    <a class="dropdown-item" href="#">80+</a>
+				  </div>
+				</div>
+				<br>
+				<form action="/action_page.php">
+					<!-- date form for when user moved into their neighborhood-->
+				  <label for="date">Date Moved into the Neighborhood:</label>
+				  <input type="date"  name="date">
+				
+				</form>
+
+				<div>
+			    <input type="text" class="form-control" placeholder="Hobbies and Interests (15 words)">
+			   </div><br>
+				<!-- button to confirm user's account-->
+			   <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Confirm</button>
+
+
+		      
+		    </div>
+		  </div>
+		</div>
+		<br><br>
+		<!-- example card that would be placed in the activity feed-->
+		<div style="padding-left: 250px;">
+			<div class="card border-primary mb-3 w-75">
+				<div class="card-header">
+				    Icon | Category | Ward | Date | Address
+				 </div>
+				<div class="card-body">
+					    <h5 class="card-title">Description</h5>
+					    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+					    
+				</div>
+				<div class="card-footer text-muted">
+				    Uploaded by Name 2 days ago...
+				  </div>
+				  <div class="card-footer text-muted">
+				     <a href="#" class="btn btn-primary">View Comments</a>
+				  </div>
+			</div>
+		</div>
+		
+
+		<script>
+			
+
+
+		</script>
+
+
+	</body>
+
+
+
+
+</html>

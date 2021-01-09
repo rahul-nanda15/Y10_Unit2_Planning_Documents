@@ -1,0 +1,117 @@
+<html>
+
+	<head>
+		<!-- importing leaflet resources-->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+		<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+	</head>
+
+	<body>
+
+
+
+		<div id="map-contain">
+
+			<!-- input box to enter user address -->
+
+			Enter Address: <input type="text" id="address" name="address">
+			<!-- button to add marker to map at the user's inputted location-->
+			<button onclick="addToMap()">Go</button><br>
+			<!-- map dimensions-->
+			<div id='map' style='width:700px; height:600'></div>
+
+		</div>
+		
+
+
+		<script>
+
+			//configuring leaflet map
+			map = new L.Map('map');
+
+			//adding a basemap layer
+        	var cartocdn = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+        	cartoAttrib = 'Carto geodatabase is good for this application';
+        	carto = new L.TileLayer(cartocdn);
+
+        	//centering map on Toronto coordinates [lat, long],zoom lvl
+        	map.setView([43.6532, -79.3832],12); 
+        	map.addLayer(carto);
+
+        	//function to add a marker to user inputted location
+			function addToMap(){
+
+				//position stack api key variable
+				var apikey = 'cbe4d20b7da9948df52c96f4e6f2e454';
+				var userAddress = document.getElementById("address").value
+
+				//fetching geocoder to convert inputted address to mapped coordinates
+				fetch("http://api.positionstack.com/v1/forward?access_key="+apikey+"&query="+userAddress)
+				//requesting and converting data response to json
+				.then((res)=> res.json())
+				.then(output => {
+					//setting data variable
+					var data=output;
+					console.log(data);
+
+					//setting variable for latitude and longitude
+					var latitude = data['data'][0]['latitude']
+					var longitude = data['data'][0]['longitude']
+					console.log(latitude)
+					console.log(longitude)
+
+					sum=0
+					// 4 if statement arguments that checks whether the inputted location is in the gta
+					// it is not very accurate, however does provide an area that is relevant to the general area of toronto
+
+					if (latitude<43.855){	
+						console.log('working')
+						sum=sum+1
+					}
+					if (latitude>43.58){
+						sum=sum+1
+					}
+					if (longitude>-79.65){
+						sum=sum+1
+					}
+					if (longitude<-79.11){
+						console.log('working')
+						sum=sum+1
+					}
+					console.log(sum)
+					if (sum==4){ //if all 4 statements are true, add marker to the map
+						var marker = L.marker([latitude, longitude]).addTo(map);
+					}
+					else {
+						alert("Please Enter an Address inside Toronto") //if location is not in toronto, alert user. (if all 4 statements are not true)
+					}
+					
+					
+					
+
+					
+					
+				})
+			}
+
+			
+			
+
+			
+
+		</script>
+
+	</body>
+
+	<style>
+		/* styling the map*/
+		#map-contain{
+			padding-top: 50px;
+			padding-left: 360px;
+		}
+
+	</style>
+
+
+</html>

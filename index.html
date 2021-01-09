@@ -1,0 +1,160 @@
+<html>
+    <head>
+        <!-- FIREBASE and GOOGLE AUTHENICATION IMPORTS -->
+        
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+       
+
+ 
+    </head>
+
+    <body >
+           
+            
+            <!-- page title -->
+            <h3>A demonstration of how to add comments to a potential post using a real-time database (google firebase)</h3>
+
+            
+           <!-- name and comment input bars -->
+            <input type="text" id="name" value="Enter Name...">
+            <input type="text" id="comment" value="Enter Comment">
+            
+            <!-- buttons to view and add a comment (get data from database)-->
+            <button onclick = "AddComment()" >Add a Comment</button>
+            <button onclick = "ViewComments()" >View all Comments</button>
+
+            <p>Comments:</p> <!-- empty div showing comments -->
+
+        
+            
+
+            <div id="allcomments"></div>
+                 
+    </body>
+    
+    <!-- HERE IS THE JAVASCRIPT TO CONNECT TO YOUR FIREBASE -->
+    <script>
+
+        //script that gets the timestamp of the comment
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        //stored in variable called "today"
+
+        today = mm + '/' + dd + '/' + yyyy;
+        console.log(today);
+
+        // Variables created here to be used throughout the program
+
+        var provider = new firebase.auth.GoogleAuthProvider();
+    
+        
+        // Your web app's Firebase configuration that we copy-and-paste from 
+        // the Firebase setup
+        var config = 
+        {
+            apiKey: "AIzaSyDjMJIGK5FY65qRzB-5BDd4runMFOHdzcs",
+            authDomain: "fir-demo3-a8557.firebaseapp.com",
+            databaseURL: "https://fir-demo3-a8557-default-rtdb.firebaseio.com",
+            projectId: "fir-demo3-a8557",
+            storageBucket: "fir-demo3-a8557.appspot.com",
+            messagingSenderId: "718931247913",
+            appId: "1:718931247913:web:d8cffb1c2be28c99022d38",
+            measurementId: "G-P53CWWNF3W"     
+        };
+
+        firebase.initializeApp(config);
+        //firebase.analytics();
+
+        // Authentication Check: to see if you are logged in
+        
+        function AddComment() 
+        {
+
+            document.getElementById("allcomments").innerHTML = "" //empty div that displays comments to ensure they do not stack on top of each other
+
+            // Create a database object that we can refer to
+            var database = firebase.database();
+
+            // Create a reference to a particular location or "node" called CommentSection
+            var ref = database.ref('CommentSection');
+
+            // Grab the Name and Comment obtained from the HTML frontend textboxes
+            var sname = document.getElementById("name").value;
+            var scomment = document.getElementById("comment").value;
+           
+            
+            // Create a JSON object to add to the database with user-inputted data
+            var data = 
+            {
+                name: sname,
+                comment: scomment,
+            }
+            // "PUSH" means we add something to the database
+            ref.push(data);
+            ref.once('value', gotData, errData)
+        } // end AddComment
+
+        function ViewComments() 
+        {
+
+            // Create a database object that we can refer to
+            var database = firebase.database();
+
+           
+            // 'CommentSection'is the name of the main branch in the database
+            var ref = database.ref('CommentSection');
+            
+
+            ref.once('value', gotData, errData) 
+            // trigger helper function 
+
+        } // end ViewComments
+        
+        function gotData(data)
+        {
+
+            
+            
+            
+            
+            // collect all of the unique objects ('keys' or id's) out of the database
+            var nameData = data.val(); // access the data 'value' of each name 'object' 
+            var keys = Object.keys(nameData);
+            console.log(keys);
+            commentList=[]
+            // iterate through the unique object id's and grab data fields: 'name', 'comment'
+            for (var i = 0; i < keys.length; i++){
+              var k = keys[i];
+              //storing name and comment into a variable
+              var name = nameData[k].name;
+              var comment = nameData[k].comment;
+              //compiling both into one string
+              var commentVariable = name+" says "+comment +" at "+today+"<br>"
+              commentList.push(commentVariable)
+
+              
+
+              
+
+            }
+           
+          
+            document.getElementById("allcomments").innerHTML = commentList //list all comments on the frontend
+
+        }
+
+        function errData(err)
+        {
+            console.log('Error!')
+            console.log(err)
+        }
+
+    </script>
+</html>

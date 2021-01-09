@@ -1,0 +1,150 @@
+<html>
+
+	<head>
+
+		<!-- importing ChartJS-->
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+		<script src="https://cdnjs.com/libraries/Chart.js"></script>
+
+	</head>
+
+	<body>
+
+		<!-- creating canvas pie chart-->
+		<canvas id="myChart"></canvas>
+
+
+		<script>
+
+			//creating sample data of user created posts
+			// users when creating a post would include more info, but this is a sample and all that is necessary to create a graph
+
+			//
+			//
+			UserData = [
+
+			{
+				"User": "John Doe",
+				"Issue Category": "Theft", 
+				"Time Stamp": 9/16/2020
+			},
+			{
+				"User": "Jane Doe",
+				"Issue Category": "Theft",
+				"Time Stamp": 9/1/2020
+			},
+			{
+				"User": "James",
+				"Issue Category": "Theft",
+				"Time Stamp": 9/30/2020
+			},
+			{
+				"User": "Jill",
+				"Issue Category": "Theft",
+				"Time Stamp": 9/26/2020
+			},
+			{
+				"User": "Brian",
+				"Issue Category": "Package Pirate",
+				"Time Stamp": 9/18/2020
+			},
+			{
+				"User": "Jake",
+				"Issue Category": "Package Pirate",
+				"Time Stamp": 9/6/2020
+			},
+			{
+				"User": "Aaron",
+				"Issue Category": "Package Pirate",
+				"Time Stamp": 9/24/2020
+			},
+			{
+				"User": "Daniel",
+				"Issue Category": "Closed Roads",
+				"Time Stamp": 9/14/2020
+			},
+			{
+				"User": "Luca",
+				"Issue Category": "Closed Roads",
+				"Time Stamp": 9/3/2020
+			},
+			{
+				"User": "Oscar",
+				"Issue Category": "Homocide",
+				"Time Stamp": 9/13/2020
+			}]
+
+			console.log(UserData)
+			//creating empty array for issue categories
+			labels=[]
+
+			//empty list that indicates how many times each issue has occurred
+			quantities=[]
+
+			//4 empty sums that will indicate how many times each issue has occurred
+			theftquantity=0
+			ppquantity=0
+			crquantity=0
+			hquantity=0
+
+			for (i in UserData){ //loop through data
+				issuecategory = UserData[i]["Issue Category"]
+				if (labels.includes(issuecategory)){ //check if list contains issue category
+					console.log("It includes"+issuecategory)
+				}
+				else {
+					labels.push(issuecategory); //add issue category name to list
+				} 
+				if (issuecategory == "Theft"){
+					theftquantity = theftquantity + 1 //add +1 to theft quantity each time it occurs in data
+				}
+				if (issuecategory == "Package Pirate"){
+					ppquantity = ppquantity + 1//add +1 to package pirate quantity each time it occurs in data
+				}
+				if (issuecategory == "Closed Roads"){
+					crquantity = crquantity + 1//add +1 to closed road quantity each time it occurs in data
+				}
+				if (issuecategory == "Homocide"){
+					hquantity = hquantity + 1//add +1 to homocide quantity each time it occurs in data
+				}
+				
+
+			}
+			//push quantities of each issue category to a list
+			quantities.push(hquantity)
+			quantities.push(crquantity)
+			quantities.push(ppquantity)
+			quantities.push(theftquantity)
+			
+
+
+			var ctx = document.getElementById('myChart').getContext('2d'); //referencing canvas
+			var colorHex = ['green','blue', 'orange', 'yellow']; //creating graph colors
+
+			var myChart = new Chart(ctx, {
+			    // The type of chart we want to create
+			    type: 'pie', 
+
+			    // The data for our dataset
+			    data: {
+			        datasets: [{
+			            data: quantities,
+			            backgroundColor: colorHex
+			        }],
+			        labels: labels
+			    },
+			    options: {
+			    	responsive: true
+			    }
+
+			    
+			   
+			});
+
+		</script>
+
+	</body>
+
+
+</html>
